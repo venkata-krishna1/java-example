@@ -1,0 +1,26 @@
+pipeline{
+    agent{
+        label 'tomcat'
+    }
+    stages{
+        stage('checkout'){
+            steps{
+              git branch: 'main', url: 'https://github.com/venkata-krishna1/java-example.git'
+            }
+        }
+
+        stage('build'){
+            steps{
+                sh 'mvn clean package'
+            }
+        }
+
+        stage('deploy'){
+            steps{
+                
+                sh 'sudo cp /home/ec2-user/jenkins/workspace/tomcat-1/target/works-with-heroku-1.0.war /opt/tomcat/apache-tomcat-9.0.68/webapps/'
+            }
+
+        }
+    }
+}
